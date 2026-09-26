@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
-  ShieldAlert,
   ShieldCheck,
   Menu,
   X,
@@ -13,11 +12,14 @@ import {
   GraduationCap,
   LogOut,
   ChevronRight,
-  User as UserIcon
+  User as UserIcon,
+  Users,
+  ShieldAlert,
+  Inbox
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
-  const { user, signOut } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -41,110 +43,120 @@ export const Navbar: React.FC = () => {
     navigate('/');
   };
 
-  const isHome = location.pathname === '/';
-
   return (
     <header
       className={`sticky top-0 z-40 transition-all duration-200 ${
         isScrolled
-          ? 'bg-cyber-950/95 backdrop-blur-md border-b border-cyber-800 shadow-lg'
-          : 'bg-cyber-950/80 backdrop-blur-xs border-b border-cyber-900'
+          ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs'
+          : 'bg-white/80 backdrop-blur-xs border-b border-slate-200/80'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           {/* Brand Logo */}
           <Link
             to="/"
-            className="flex items-center space-x-3 group focus:outline-none rounded-xl p-1"
+            className="flex items-center space-x-2.5 group focus:outline-none"
           >
-            <div className="p-2.5 bg-gradient-to-br from-sky-500 to-cyan-600 group-hover:from-sky-400 group-hover:to-cyan-500 text-white rounded-xl shadow-glow-cyan transition-all">
-              <ShieldAlert className="w-5 h-5" />
+            <div className="p-1.5 bg-blue-600 rounded-lg text-white shadow-xs">
+              <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center space-x-2">
-                <span className="text-lg sm:text-xl font-black tracking-tight text-white font-mono">
-                  PHISHING<span className="text-sky-400">DECODER</span>
-                </span>
-                <span className="hidden sm:inline-flex px-2 py-0.5 text-[9px] font-bold tracking-wider uppercase bg-sky-950/80 text-sky-400 border border-sky-800/80 rounded-md font-mono">
-                  EXPLAINABLE ENGINE
-                </span>
-              </div>
-              <p className="hidden md:block text-[10px] text-slate-400 font-medium tracking-tight">
-                Decode the threat. Understand the signal. Know what to do.
-              </p>
+              <span className="text-base sm:text-lg font-bold tracking-tight text-slate-900">
+                Phishing <span className="text-blue-600">Decoder</span>
+              </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
           <nav
             aria-label="Main Navigation"
-            className="hidden lg:flex items-center space-x-7 text-xs font-semibold uppercase tracking-wider text-slate-400"
+            className="hidden md:flex items-center space-x-6 text-xs font-medium text-slate-600"
           >
-            {user ? (
+            {isAdmin ? (
+              // Admin-Specific Navigation
               <>
                 <Link
+                  to="/admin/dashboard"
+                  className={`hover:text-slate-900 transition-colors ${
+                    location.pathname === '/admin/dashboard' ? 'text-blue-600 font-semibold' : ''
+                  }`}
+                >
+                  Admin Overview
+                </Link>
+                <Link
+                  to="/admin/users"
+                  className={`hover:text-slate-900 transition-colors ${
+                    location.pathname === '/admin/users' ? 'text-blue-600 font-semibold' : ''
+                  }`}
+                >
+                  Users
+                </Link>
+                <Link
+                  to="/admin/analyses"
+                  className={`hover:text-slate-900 transition-colors ${
+                    location.pathname === '/admin/analyses' ? 'text-blue-600 font-semibold' : ''
+                  }`}
+                >
+                  Global Telemetry
+                </Link>
+                <Link
+                  to="/admin/messages"
+                  className={`hover:text-slate-900 transition-colors ${
+                    location.pathname === '/admin/messages' ? 'text-blue-600 font-semibold' : ''
+                  }`}
+                >
+                  Messages
+                </Link>
+                <Link
                   to="/decoder"
-                  className={`hover:text-white transition-colors flex items-center space-x-1.5 ${
-                    location.pathname === '/decoder' ? 'text-sky-400 font-bold' : ''
+                  className={`hover:text-slate-900 transition-colors text-slate-500 flex items-center gap-1 ${
+                    location.pathname === '/decoder' ? 'text-blue-600 font-semibold' : ''
                   }`}
                 >
-                  <Search className="w-3.5 h-3.5 text-sky-400" />
-                  <span>Threat Decoder</span>
-                </Link>
-                <Link
-                  to="/dashboard"
-                  className={`hover:text-white transition-colors flex items-center space-x-1.5 ${
-                    location.pathname === '/dashboard' ? 'text-sky-400 font-bold' : ''
-                  }`}
-                >
-                  <LayoutDashboard className="w-3.5 h-3.5" />
-                  <span>Dashboard</span>
-                </Link>
-                <Link
-                  to="/history"
-                  className={`hover:text-white transition-colors flex items-center space-x-1.5 ${
-                    location.pathname === '/history' ? 'text-sky-400 font-bold' : ''
-                  }`}
-                >
-                  <History className="w-3.5 h-3.5" />
-                  <span>History</span>
-                </Link>
-                <Link
-                  to="/learn"
-                  className={`hover:text-white transition-colors flex items-center space-x-1.5 ${
-                    location.pathname === '/learn' ? 'text-sky-400 font-bold' : ''
-                  }`}
-                >
-                  <GraduationCap className="w-3.5 h-3.5" />
-                  <span>Learn Lab</span>
+                  <Search className="w-3 h-3 text-blue-600" />
+                  <span>Decoder Studio</span>
                 </Link>
               </>
             ) : (
+              // Standard User / Public Navigation
               <>
                 <Link
-                  to="/"
-                  className={`hover:text-white transition-colors ${
-                    isHome ? 'text-sky-400 font-bold' : ''
+                  to="/decoder"
+                  className={`hover:text-slate-900 transition-colors ${
+                    location.pathname === '/decoder' ? 'text-blue-600 font-semibold' : ''
                   }`}
                 >
-                  Overview
+                  Threat Decoder
                 </Link>
-                <a href="#capabilities" className="hover:text-white transition-colors">
-                  Capabilities
-                </a>
-                <a href="#workflow" className="hover:text-white transition-colors">
-                  How It Works
-                </a>
-                <a href="#demo" className="hover:text-white transition-colors">
-                  Live Engine Demo
-                </a>
-                <a href="#signals" className="hover:text-white transition-colors">
-                  Signals Showcase
-                </a>
-                <a href="#learn-preview" className="hover:text-white transition-colors">
-                  Spot The Phish
-                </a>
+                <Link
+                  to="/learn"
+                  className={`hover:text-slate-900 transition-colors ${
+                    location.pathname === '/learn' ? 'text-blue-600 font-semibold' : ''
+                  }`}
+                >
+                  Spot the Phish
+                </Link>
+                {user && (
+                  <>
+                    <Link
+                      to="/dashboard"
+                      className={`hover:text-slate-900 transition-colors ${
+                        location.pathname === '/dashboard' ? 'text-blue-600 font-semibold' : ''
+                      }`}
+                    >
+                      Dashboard
+                    </Link>
+                    <Link
+                      to="/history"
+                      className={`hover:text-slate-900 transition-colors ${
+                        location.pathname === '/history' ? 'text-blue-600 font-semibold' : ''
+                      }`}
+                    >
+                      History
+                    </Link>
+                  </>
+                )}
               </>
             )}
           </nav>
@@ -155,52 +167,112 @@ export const Navbar: React.FC = () => {
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center space-x-2.5 px-3 py-1.5 rounded-xl bg-cyber-900 border border-cyber-700/80 hover:border-cyber-600 transition-colors text-xs"
+                  className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 border border-slate-200 transition-colors text-xs"
                 >
-                  <div className="w-6 h-6 rounded-lg bg-sky-600 flex items-center justify-center text-white text-[11px] font-bold uppercase">
+                  <div className={`w-6 h-6 rounded-md flex items-center justify-center text-white text-[11px] font-bold uppercase ${isAdmin ? 'bg-amber-600' : 'bg-blue-600'}`}>
                     {user.email ? user.email[0] : 'U'}
                   </div>
-                  <span className="text-slate-200 font-medium truncate max-w-[120px]">
+                  <span className="text-slate-800 font-medium truncate max-w-[120px]">
                     {user.displayName || user.email?.split('@')[0]}
                   </span>
+                  {isAdmin && (
+                    <span className="bg-amber-100 text-amber-800 text-[9px] font-extrabold px-1.5 py-0.5 rounded border border-amber-200">
+                      ADMIN
+                    </span>
+                  )}
                 </button>
 
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-52 bg-cyber-900 border border-cyber-700 rounded-xl shadow-2xl py-2 z-50 animate-fade-in text-xs">
-                    <div className="px-3 py-2 border-b border-cyber-800">
-                      <p className="font-semibold text-white truncate">{user.displayName || 'Security Analyst'}</p>
-                      <p className="text-[11px] text-slate-400 truncate">{user.email}</p>
+                  <div className="absolute right-0 mt-2 w-52 bg-white border border-slate-200 rounded-xl shadow-lg py-1.5 z-50 animate-fade-in text-xs">
+                    <div className="px-3 py-2 border-b border-slate-100">
+                      <div className="flex items-center justify-between">
+                        <p className="font-semibold text-slate-900 truncate">{user.displayName || 'Security Analyst'}</p>
+                        {isAdmin && (
+                          <span className="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded font-bold">
+                            ADMIN
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-slate-500 truncate mt-0.5">{user.email}</p>
                     </div>
 
-                    <Link
-                      to="/decoder"
-                      onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center space-x-2 px-3 py-2 text-slate-300 hover:text-white hover:bg-cyber-800"
-                    >
-                      <Search className="w-3.5 h-3.5 text-sky-400" />
-                      <span>Analyze Threat</span>
-                    </Link>
-                    <Link
-                      to="/dashboard"
-                      onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center space-x-2 px-3 py-2 text-slate-300 hover:text-white hover:bg-cyber-800"
-                    >
-                      <LayoutDashboard className="w-3.5 h-3.5 text-sky-400" />
-                      <span>Security Dashboard</span>
-                    </Link>
-                    <Link
-                      to="/history"
-                      onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center space-x-2 px-3 py-2 text-slate-300 hover:text-white hover:bg-cyber-800"
-                    >
-                      <History className="w-3.5 h-3.5 text-sky-400" />
-                      <span>Analysis Archive</span>
-                    </Link>
+                    {isAdmin ? (
+                      <>
+                        <Link
+                          to="/admin/dashboard"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center space-x-2 px-3 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                        >
+                          <LayoutDashboard className="w-3.5 h-3.5 text-blue-600" />
+                          <span>Admin Dashboard</span>
+                        </Link>
+                        <Link
+                          to="/admin/users"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center space-x-2 px-3 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                        >
+                          <Users className="w-3.5 h-3.5 text-blue-600" />
+                          <span>Manage Users</span>
+                        </Link>
+                        <Link
+                          to="/admin/analyses"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center space-x-2 px-3 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                        >
+                          <ShieldAlert className="w-3.5 h-3.5 text-blue-600" />
+                          <span>Global Telemetry</span>
+                        </Link>
+                        <Link
+                          to="/admin/messages"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center space-x-2 px-3 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                        >
+                          <Inbox className="w-3.5 h-3.5 text-blue-600" />
+                          <span>Messages</span>
+                        </Link>
+                        <div className="border-t border-slate-100 my-1" />
+                        <Link
+                          to="/decoder"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center space-x-2 px-3 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                        >
+                          <Search className="w-3.5 h-3.5 text-blue-600" />
+                          <span>Decoder Studio</span>
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          to="/decoder"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center space-x-2 px-3 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                        >
+                          <Search className="w-3.5 h-3.5 text-blue-600" />
+                          <span>Threat Decoder</span>
+                        </Link>
+                        <Link
+                          to="/dashboard"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center space-x-2 px-3 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                        >
+                          <LayoutDashboard className="w-3.5 h-3.5 text-blue-600" />
+                          <span>Dashboard</span>
+                        </Link>
+                        <Link
+                          to="/history"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center space-x-2 px-3 py-2 text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                        >
+                          <History className="w-3.5 h-3.5 text-blue-600" />
+                          <span>History Archive</span>
+                        </Link>
+                      </>
+                    )}
 
-                    <div className="border-t border-cyber-800 mt-1 pt-1">
+                    <div className="border-t border-slate-100 mt-1 pt-1">
                       <button
                         onClick={handleSignOut}
-                        className="w-full flex items-center space-x-2 px-3 py-2 text-rose-400 hover:bg-rose-950/40 text-left"
+                        className="w-full flex items-center space-x-2 px-3 py-2 text-rose-600 hover:bg-rose-50 text-left"
                       >
                         <LogOut className="w-3.5 h-3.5" />
                         <span>Sign Out</span>
@@ -213,27 +285,26 @@ export const Navbar: React.FC = () => {
               <>
                 <Link
                   to="/login"
-                  className="inline-flex items-center space-x-1.5 px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white hover:bg-cyber-900 rounded-xl transition-colors"
+                  className="inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 transition-colors"
                 >
                   <LogIn className="w-3.5 h-3.5" />
                   <span>Sign In</span>
                 </Link>
                 <Link
                   to="/signup"
-                  className="inline-flex items-center space-x-1.5 px-4 py-2 text-xs font-bold text-white bg-sky-600 hover:bg-sky-500 rounded-xl shadow-xs transition-all group"
+                  className="inline-flex items-center space-x-1.5 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors"
                 >
                   <span>Start Free</span>
-                  <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </>
             )}
           </div>
 
           {/* Mobile menu toggle button */}
-          <div className="flex lg:hidden">
+          <div className="flex md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-cyber-900 focus:outline-none"
+              className="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
               aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Navigation Menu'}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -244,114 +315,110 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-cyber-950 border-b border-cyber-800 px-4 pt-3 pb-6 space-y-3 animate-fade-in shadow-2xl">
+        <div className="md:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-fade-in shadow-lg">
           <nav className="space-y-1">
-            {user ? (
+            {isAdmin ? (
+              <>
+                <Link
+                  to="/admin/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-blue-600 bg-blue-50"
+                >
+                  Admin Overview
+                </Link>
+                <Link
+                  to="/admin/users"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                >
+                  Manage Users
+                </Link>
+                <Link
+                  to="/admin/analyses"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                >
+                  Global Telemetry
+                </Link>
+                <Link
+                  to="/admin/messages"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                >
+                  Messages
+                </Link>
+                <div className="border-t border-slate-100 my-1 pt-1" />
+                <Link
+                  to="/decoder"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                >
+                  Decoder Studio
+                </Link>
+              </>
+            ) : (
               <>
                 <Link
                   to="/decoder"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-sky-400 hover:bg-cyber-900"
+                  className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
                 >
-                  Analyze Threat (Decoder)
-                </Link>
-                <Link
-                  to="/dashboard"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-sky-400 hover:bg-cyber-900"
-                >
-                  Security Dashboard
-                </Link>
-                <Link
-                  to="/history"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-sky-400 hover:bg-cyber-900"
-                >
-                  Analysis History
+                  Threat Decoder Studio
                 </Link>
                 <Link
                   to="/learn"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-sky-400 hover:bg-cyber-900"
+                  className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
                 >
-                  Spot the Phish (Learn Lab)
+                  Spot the Phish
                 </Link>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-sky-400 hover:bg-cyber-900"
-                >
-                  Overview
-                </Link>
-                <a
-                  href="#capabilities"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-sky-400 hover:bg-cyber-900"
-                >
-                  Core Capabilities
-                </a>
-                <a
-                  href="#workflow"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-sky-400 hover:bg-cyber-900"
-                >
-                  How It Works
-                </a>
-                <a
-                  href="#demo"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-sky-400 hover:bg-cyber-900"
-                >
-                  Interactive Demo
-                </a>
-                <a
-                  href="#signals"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-sky-400 hover:bg-cyber-900"
-                >
-                  Security Signals Showcase
-                </a>
-                <a
-                  href="#learn-preview"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-200 hover:text-sky-400 hover:bg-cyber-900"
-                >
-                  Spot The Phish
-                </a>
+                {user && (
+                  <>
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                    >
+                      Security Dashboard
+                    </Link>
+                    <Link
+                      to="/history"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                    >
+                      Analysis History
+                    </Link>
+                  </>
+                )}
               </>
             )}
           </nav>
 
-          <div className="pt-3 border-t border-cyber-850 space-y-2">
+          <div className="pt-3 border-t border-slate-100">
             {user ? (
               <button
                 onClick={handleSignOut}
-                className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 text-xs font-bold text-rose-400 bg-rose-950/30 border border-rose-900/40 rounded-xl"
+                className="w-full text-left px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 rounded-xl"
               >
-                <LogOut className="w-3.5 h-3.5" />
-                <span>Sign Out ({user.email})</span>
+                Sign Out ({user.email})
               </button>
             ) : (
-              <>
+              <div className="flex items-center space-x-2">
                 <Link
                   to="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 text-xs font-semibold text-slate-300 border border-cyber-700 bg-cyber-900 rounded-xl"
+                  className="flex-1 py-2 text-center text-xs font-medium text-slate-700 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200"
                 >
-                  <LogIn className="w-4 h-4" />
-                  <span>Sign In</span>
+                  Sign In
                 </Link>
                 <Link
                   to="/signup"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 text-xs font-bold text-white bg-sky-600 rounded-xl shadow-xs"
+                  className="flex-1 py-2 text-center text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl"
                 >
-                  <span>Start Free Analysis</span>
+                  Start Free
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </div>

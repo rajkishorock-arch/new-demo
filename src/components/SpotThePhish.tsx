@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import {
   GraduationCap,
   CheckCircle2,
-  XCircle,
-  HelpCircle,
   AlertCircle,
   ArrowRight,
-  RotateCcw,
-  Sparkles,
-  ShieldCheck
+  HelpCircle,
+  Sparkles
 } from 'lucide-react';
 
 interface PhishScenario {
@@ -172,50 +169,45 @@ export const SpotThePhish: React.FC = () => {
   const totalCorrect = scenario.signalsAvailable.filter(s => s.isCorrect).length;
 
   return (
-    <div className="bg-cyber-900 border border-cyber-700/80 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 text-slate-100">
+    <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-6 text-slate-900">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-cyber-800 gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 gap-3">
         <div className="flex items-center space-x-3">
-          <div className="p-2.5 bg-gradient-to-br from-sky-600 to-cyan-600 text-white rounded-xl shadow-xs">
+          <div className="p-2 bg-blue-50 text-blue-600 rounded-xl border border-blue-100">
             <GraduationCap className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center space-x-2">
-              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                Spot the Phish — Interactive Awareness Lab
-              </h3>
-              <span className="text-[10px] font-mono uppercase bg-sky-950 border border-sky-800 text-sky-400 px-2 py-0.5 rounded">
-                SAFE SIMULATION
-              </span>
-            </div>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+              Spot the Phish
+            </h3>
+            <p className="text-xs text-slate-500 mt-0.5">
               Can you identify all the deceptive signals before clicking?
             </p>
           </div>
         </div>
 
-        <div className="flex items-center space-x-2 text-xs font-mono text-slate-400">
-          <span>Case {currentScenarioIndex + 1} of {SCENARIOS.length}</span>
+        <div className="text-xs text-slate-500">
+          Case {currentScenarioIndex + 1} of {SCENARIOS.length}
         </div>
       </div>
 
       {/* Scenario Simulator Card */}
-      <div className="bg-cyber-950 border border-cyber-800 rounded-xl p-5 space-y-3 relative overflow-hidden">
-        <div className="flex items-center justify-between text-xs text-slate-400 border-b border-cyber-850 pb-2.5">
+      <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3">
+        <div className="flex items-center justify-between text-xs text-slate-500 border-b border-slate-200 pb-2.5">
           <div className="flex items-center space-x-2">
-            <span className="px-2 py-0.5 rounded bg-cyber-800 text-[10px] font-mono text-sky-300 font-bold">
+            <span className="px-2 py-0.5 rounded bg-white text-[10px] text-slate-700 font-semibold uppercase border border-slate-200">
               {scenario.type}
             </span>
-            <span className="font-mono text-slate-300">From: {scenario.sender}</span>
+            <span className="font-mono text-slate-700">From: {scenario.sender}</span>
           </div>
-          <span className="text-[11px] text-slate-500 font-mono">Fictional Safe Case</span>
+          <span className="text-[11px] text-slate-400">Realistic Case</span>
         </div>
 
         <div className="space-y-1">
-          <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+          <div className="text-xs font-semibold text-slate-700">
             {scenario.subjectOrPreview}
           </div>
-          <div className="font-mono text-xs sm:text-sm text-amber-200 bg-cyber-900/90 p-3.5 rounded-lg border border-amber-900/40 leading-relaxed break-words whitespace-pre-wrap">
+          <div className="font-mono text-xs sm:text-sm text-slate-800 bg-white p-3.5 rounded-lg border border-slate-200 leading-relaxed break-words whitespace-pre-wrap shadow-2xs">
             {scenario.body}
           </div>
         </div>
@@ -224,16 +216,16 @@ export const SpotThePhish: React.FC = () => {
       {/* Question Prompt */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
-            <HelpCircle className="w-4 h-4 text-sky-400" />
+          <label className="text-xs font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+            <HelpCircle className="w-4 h-4 text-blue-600" />
             <span>Select all phishing signals you notice in this case:</span>
           </label>
           {!hasEvaluated && (
             <button
               onClick={handleSelectAll}
-              className="text-xs text-sky-400 hover:text-sky-300 font-medium transition-colors"
+              className="text-xs text-blue-600 hover:text-blue-700 font-medium transition-colors"
             >
-              Select All Applicable
+              Select All
             </button>
           )}
         </div>
@@ -243,36 +235,36 @@ export const SpotThePhish: React.FC = () => {
           {scenario.signalsAvailable.map(signal => {
             const isSelected = selectedSignalIds.includes(signal.id);
 
-            let borderStyle = 'border-cyber-800 bg-cyber-950/70 hover:border-cyber-700';
+            let borderStyle = 'border-slate-200 bg-white hover:bg-slate-50';
             if (hasEvaluated) {
               if (signal.isCorrect && isSelected) {
-                borderStyle = 'border-emerald-600/50 bg-emerald-950/30 text-emerald-200';
+                borderStyle = 'border-emerald-300 bg-emerald-50 text-emerald-950';
               } else if (signal.isCorrect && !isSelected) {
-                borderStyle = 'border-amber-600/50 bg-amber-950/30 text-amber-200';
+                borderStyle = 'border-amber-300 bg-amber-50 text-amber-950';
               } else if (!signal.isCorrect && isSelected) {
-                borderStyle = 'border-rose-600/50 bg-rose-950/30 text-rose-200';
+                borderStyle = 'border-rose-300 bg-rose-50 text-rose-950';
               }
             } else if (isSelected) {
-              borderStyle = 'border-sky-500 bg-sky-950/40 text-white';
+              borderStyle = 'border-blue-500 bg-blue-50/60 text-slate-900';
             }
 
             return (
               <div
                 key={signal.id}
                 onClick={() => toggleSignal(signal.id)}
-                className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-start space-x-3 ${borderStyle}`}
+                className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-start space-x-3 shadow-2xs ${borderStyle}`}
               >
                 <input
                   type="checkbox"
                   checked={isSelected}
                   onChange={() => {}}
                   disabled={hasEvaluated}
-                  className="w-4 h-4 rounded text-sky-600 bg-cyber-900 border-cyber-700 focus:ring-0 mt-0.5 cursor-pointer"
+                  className="w-4 h-4 rounded text-blue-600 bg-white border-slate-300 focus:ring-0 mt-0.5 cursor-pointer"
                 />
                 <div className="space-y-1 text-xs">
                   <span className="font-semibold block">{signal.label}</span>
                   {hasEvaluated && (
-                    <p className="text-[11px] text-slate-400 leading-normal animate-fade-in">
+                    <p className="text-[11px] text-slate-600 leading-normal animate-fade-in">
                       {signal.explanation}
                     </p>
                   )}
@@ -287,42 +279,42 @@ export const SpotThePhish: React.FC = () => {
           <button
             onClick={handleEvaluate}
             disabled={selectedSignalIds.length === 0}
-            className="w-full sm:w-auto px-6 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl text-xs shadow-xs transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs shadow-xs transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             <Sparkles className="w-4 h-4" />
-            <span>Evaluate My Analysis ({selectedSignalIds.length} selected)</span>
+            <span>Check My Selection ({selectedSignalIds.length} selected)</span>
           </button>
         ) : (
           <div className="space-y-4 animate-fade-in">
             {/* Feedback Result Banner */}
-            <div className="p-4 rounded-xl bg-cyber-950 border border-cyber-800 space-y-2">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   {correctCount === totalCorrect ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600" />
                   ) : (
-                    <AlertCircle className="w-5 h-5 text-amber-400" />
+                    <AlertCircle className="w-5 h-5 text-amber-600" />
                   )}
-                  <span className="text-sm font-bold text-white">
+                  <span className="text-sm font-semibold text-slate-900">
                     {correctCount === totalCorrect
-                      ? 'Spot On! All deceptive signals correctly identified.'
+                      ? 'Correct! All deceptive signals identified.'
                       : `You identified ${correctCount} of ${totalCorrect} key signals.`}
                   </span>
                 </div>
-                <span className="text-xs font-mono text-slate-400">
+                <span className="text-xs text-slate-500">
                   Accuracy: {Math.round((correctCount / totalCorrect) * 100)}%
                 </span>
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 {scenario.verdictExplanation}
               </p>
             </div>
 
             <button
               onClick={handleNextScenario}
-              className="inline-flex items-center space-x-2 px-5 py-2.5 bg-cyber-800 hover:bg-cyber-700 text-white text-xs font-bold rounded-xl transition-colors"
+              className="inline-flex items-center space-x-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-xl transition-colors"
             >
-              <span>Next Simulation Case</span>
+              <span>Next Scenario</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

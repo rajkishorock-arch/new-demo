@@ -20,32 +20,32 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
       case 'HIGH RISK':
       case 'CRITICAL':
         return {
-          bg: 'bg-rose-950/50 border-rose-600/40 text-rose-300',
-          dot: 'bg-rose-500 shadow-[0_0_8px_#f43f5e]',
-          icon: <AlertOctagon className="w-3.5 h-3.5 text-rose-400" />
+          bg: 'bg-rose-50 border-rose-200 text-rose-700',
+          dot: 'bg-rose-600',
+          icon: <AlertOctagon className="w-3.5 h-3.5 text-rose-600" />
         };
       case 'SUSPICIOUS':
       case 'HIGH':
         return {
-          bg: 'bg-orange-950/50 border-orange-600/40 text-orange-300',
-          dot: 'bg-orange-500 shadow-[0_0_8px_#f97316]',
-          icon: <ShieldAlert className="w-3.5 h-3.5 text-orange-400" />
+          bg: 'bg-orange-50 border-orange-200 text-orange-700',
+          dot: 'bg-orange-600',
+          icon: <ShieldAlert className="w-3.5 h-3.5 text-orange-600" />
         };
       case 'CAUTION':
       case 'MEDIUM':
         return {
-          bg: 'bg-amber-950/50 border-amber-600/40 text-amber-300',
-          dot: 'bg-amber-500 shadow-[0_0_8px_#f59e0b]',
-          icon: <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+          bg: 'bg-amber-50 border-amber-200 text-amber-700',
+          dot: 'bg-amber-600',
+          icon: <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
         };
       case 'LOW':
       case 'INFORMATIONAL':
       case 'SAFE':
       default:
         return {
-          bg: 'bg-emerald-950/50 border-emerald-600/40 text-emerald-300',
-          dot: 'bg-emerald-500 shadow-[0_0_8px_#10b981]',
-          icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+          bg: 'bg-emerald-50 border-emerald-200 text-emerald-700',
+          dot: 'bg-emerald-600',
+          icon: <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
         };
     }
   };

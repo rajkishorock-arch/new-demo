@@ -15,6 +15,8 @@ import { createOrUpdateUserProfile, getUserProfile, UserProfileData } from '../s
 interface AuthContextType {
   user: User | null;
   userProfile: UserProfileData | null;
+  role: 'user' | 'admin';
+  isAdmin: boolean;
   loading: boolean;
   profileLoading: boolean;
   profileError: string | null;
@@ -84,10 +86,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const message = err.message || '';
 
     if (code === 'auth/email-already-in-use') {
-      return { message: 'This email is already registered. Please log in instead.' };
+      return {
+        message: 'This email is already registered. Please log in, or click "Sign in with Google" if you previously created your account with Google.'
+      };
     }
-    if (code === 'auth/invalid-credential' || code === 'auth/user-not-found' || code === 'auth/wrong-password') {
-      return { message: 'Invalid email address or password.' };
+    if (code === 'auth/invalid-credential') {
+      return {
+        message: 'Invalid email or password. If you previously registered using Google Sign-In, please use "Sign in with Google" below.'
+      };
+    }
+    if (code === 'auth/wrong-password') {
+      return {
+        message: 'Incorrect password. If you registered via Google OAuth, please use "Sign in with Google" or reset your password.'
+      };
+    }
+    if (code === 'auth/user-not-found') {
+      return {
+        message: 'No account found with this email. Please check your spelling or sign up.'
+      };
+    }
+    if (code === 'auth/account-exists-with-different-credential') {
+      return {
+        message: 'An account already exists with this email under a different sign-in method. Please use Google Sign-In to access this account.'
+      };
+    }
+    if (code === 'auth/too-many-requests') {
+      return {
+        message: 'Too many unsuccessful attempts. For security, access has been temporarily throttled. Please try again in a few minutes.'
+      };
+    }
+    if (code === 'auth/invalid-email') {
+      return { message: 'Please enter a valid email address.' };
     }
     if (code === 'auth/weak-password') {
       return { message: 'Password should be at least 6 characters long.' };
@@ -96,7 +125,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { message: 'Google sign-in was closed before completing authentication.' };
     }
     if (code === 'auth/popup-blocked') {
-      return { message: 'Google sign-in was blocked by your browser. Please allow redirects.' };
+      return { message: 'Google sign-in was blocked by your browser. Please allow popups or redirects.' };
     }
     if (code === 'auth/unauthorized-domain') {
       return { message: 'This domain is not authorized in Firebase Authentication settings.' };
@@ -259,6 +288,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       value={{
         user,
         userProfile,
+        role: userProfile?.role || 'user',
+        isAdmin: userProfile?.role === 'admin',
         loading,
         profileLoading,
         profileError,

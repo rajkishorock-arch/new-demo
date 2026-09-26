@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldAlert, ShieldCheck, Lock, ExternalLink } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { openCookiePreferences } from './CookieConsent';
 import { LegalDocType } from './LegalModal';
 
@@ -10,109 +10,103 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onOpenLegalDoc }) => {
   return (
-    <footer className="bg-cyber-950 text-slate-400 text-xs sm:text-sm py-12 sm:py-16 border-t border-cyber-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 pb-12 border-b border-cyber-800/80">
+    <footer className="bg-slate-100/80 text-slate-600 text-xs sm:text-sm py-12 sm:py-16 border-t border-slate-200">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 pb-12 border-b border-slate-200">
           {/* Brand Info */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-3">
             <Link to="/" className="inline-flex items-center space-x-2.5">
-              <div className="p-2 bg-gradient-to-br from-sky-500 to-cyan-600 text-white rounded-xl shadow-xs">
-                <ShieldAlert className="w-5 h-5" />
+              <div className="p-1.5 bg-blue-600 rounded-lg text-white">
+                <ShieldCheck className="w-5 h-5" />
               </div>
-              <span className="text-xl font-black text-white font-mono tracking-tight">
-                PHISHING<span className="text-sky-400">DECODER</span>
+              <span className="text-lg font-bold text-slate-900 tracking-tight">
+                Phishing <span className="text-blue-600">Decoder</span>
               </span>
             </Link>
 
-            <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
+            <p className="text-xs text-slate-500 max-w-sm leading-relaxed">
               Decode the threat. Understand the signal. Know what to do. Explainable rule-based cybersecurity analysis for suspicious URLs, phishing emails, and smishing messages.
             </p>
 
-            <div className="p-3 bg-cyber-900/80 border border-cyber-800 rounded-xl text-[11px] text-slate-400 space-y-1">
-              <span className="text-sky-400 font-bold uppercase tracking-wider block">
-                Engineering Transparency:
+            <div className="p-3 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-600 space-y-0.5 shadow-2xs">
+              <span className="text-blue-600 font-semibold uppercase tracking-wider block">
+                Zero-Execution Safety:
               </span>
-              <p>
-                Rule-based threat assessment & explainable heuristic inspection. We do not claim external global threat intelligence feeds or real AI models unless explicitly connected.
+              <p className="text-slate-500">
+                Our engine inspects string syntax and heuristic markers locally. It never executes code, visits target servers, or clicks submitted links.
               </p>
             </div>
           </div>
 
           {/* Product Links */}
           <div>
-            <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4 font-mono">
-              Product
+            <h4 className="text-xs font-semibold text-slate-900 uppercase tracking-wider mb-3">
+              Product & Info
             </h4>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-2 text-xs">
               <li>
-                <Link to="/decoder" className="hover:text-white transition-colors">
-                  Threat Decoder Studio
+                <Link to="/decoder" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Threat Decoder
                 </Link>
               </li>
               <li>
-                <a href="#capabilities" className="hover:text-white transition-colors">
-                  URL Intelligence
-                </a>
-              </li>
-              <li>
-                <a href="#capabilities" className="hover:text-white transition-colors">
-                  Message Analysis
-                </a>
-              </li>
-              <li>
-                <a href="#demo" className="hover:text-white transition-colors">
-                  Interactive Demo
-                </a>
-              </li>
-              <li>
-                <Link to="/dashboard" className="hover:text-white transition-colors">
-                  Security Dashboard
+                <Link to="/learn" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Spot the Phish
                 </Link>
+              </li>
+              <li>
+                <a href="/#about" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  About Platform
+                </a>
+              </li>
+              <li>
+                <a href="/#contact" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Contact Team
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* Security & Architecture */}
+          {/* Safety & Learning */}
           <div>
-            <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4 font-mono">
-              Security
+            <h4 className="text-xs font-semibold text-slate-900 uppercase tracking-wider mb-3">
+              Safety & Learning
             </h4>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-2 text-xs">
               <li>
-                <a href="#signals" className="hover:text-white transition-colors">
-                  Signals Showcase
-                </a>
-              </li>
-              <li>
-                <a href="#workflow" className="hover:text-white transition-colors">
-                  Safe Inspection Workflow
-                </a>
-              </li>
-              <li>
-                <Link to="/learn" className="hover:text-white transition-colors">
-                  Spot the Phish Lab
+                <Link to="/learn" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Defense Rules
                 </Link>
               </li>
-              <li className="pt-2">
-                <div className="inline-flex items-center space-x-1.5 px-2.5 py-1 bg-cyber-900 text-sky-400 rounded-lg text-[11px] font-semibold border border-cyber-700">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Zero-Execution Sandbox</span>
-                </div>
+              <li>
+                <Link to="/decoder" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  URL Inspection
+                </Link>
+              </li>
+              <li>
+                <Link to="/decoder" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  Email Inspection
+                </Link>
+              </li>
+              <li>
+                <Link to="/decoder" className="text-slate-600 hover:text-slate-900 transition-colors">
+                  SMS / Message Inspection
+                </Link>
               </li>
             </ul>
           </div>
 
           {/* Governance & Privacy */}
           <div>
-            <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4 font-mono">
-              Governance & Privacy
+            <h4 className="text-xs font-semibold text-slate-900 uppercase tracking-wider mb-3">
+              Privacy & Legal
             </h4>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-2 text-xs">
               <li>
                 <button
                   type="button"
                   onClick={() => onOpenLegalDoc?.('privacy')}
-                  className="hover:text-white transition-colors text-left"
+                  className="text-slate-600 hover:text-slate-900 transition-colors text-left"
                 >
                   Privacy Policy
                 </button>
@@ -121,7 +115,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalDoc }) => {
                 <button
                   type="button"
                   onClick={() => onOpenLegalDoc?.('terms')}
-                  className="hover:text-white transition-colors text-left"
+                  className="text-slate-600 hover:text-slate-900 transition-colors text-left"
                 >
                   Terms of Service
                 </button>
@@ -130,13 +124,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalDoc }) => {
                 <button
                   type="button"
                   onClick={openCookiePreferences}
-                  className="hover:text-white transition-colors text-left font-medium text-sky-400"
+                  className="hover:text-blue-700 transition-colors text-left font-medium text-blue-600"
                 >
                   Cookie Preferences
                 </button>
-              </li>
-              <li className="pt-1 text-[11px] text-slate-500">
-                Data minimized: No sensitive credentials stored.
               </li>
             </ul>
           </div>
@@ -144,12 +135,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalDoc }) => {
 
         {/* Bottom Area */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© {new Date().getFullYear()} Phishing Decoder. Built with explainable security heuristics.</p>
-          <div className="flex items-center space-x-4">
-            <span className="inline-flex items-center space-x-1 text-slate-400">
-              <Lock className="w-3.5 h-3.5 text-sky-400" />
-              <span>TLS 1.3 Firebase Encrypted</span>
-            </span>
+          <p>© {new Date().getFullYear()} Phishing Decoder. Explainable cybersecurity heuristics.</p>
+          <div className="flex items-center space-x-2 text-slate-600">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>Encrypted Firebase Authentication</span>
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ onOpenPrivacyModal
   const [showPreferencesModal, setShowPreferencesModal] = useState(false);
 
   // Preference switches
-  const [essential] = useState(true); // Always true
+  const [essential] = useState(true);
   const [analytics, setAnalytics] = useState(false);
 
   useEffect(() => {
@@ -74,28 +74,28 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ onOpenPrivacyModal
         <aside
           role="region"
           aria-label="Cookie Consent Notice"
-          className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 bg-cyber-900 border border-cyber-700 rounded-2xl shadow-2xl p-5 animate-slide-up text-slate-100 backdrop-blur-md"
+          className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 bg-white border border-slate-200 rounded-2xl shadow-xl p-5 animate-slide-up text-slate-800"
         >
           <div className="flex items-start space-x-3">
-            <div className="p-2 bg-sky-950 border border-sky-800 text-sky-400 rounded-xl shrink-0">
+            <div className="p-2 bg-blue-50 border border-blue-100 text-blue-600 rounded-xl shrink-0">
               <Cookie className="w-5 h-5" />
             </div>
 
             <div className="flex-1 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+                <span className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Privacy & Cookie Preferences
                 </span>
                 <button
                   onClick={() => setIsVisible(false)}
-                  className="p-1 text-slate-400 hover:text-white rounded-lg"
+                  className="p-1 text-slate-400 hover:text-slate-600 rounded-lg"
                   aria-label="Close banner"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Phishing Decoder prioritizes your privacy. We use local storage solely for session security and your analysis workflow preferences. We do not track you across the web.
               </p>
 
@@ -103,7 +103,7 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ onOpenPrivacyModal
                 <button
                   type="button"
                   onClick={() => setShowPreferencesModal(true)}
-                  className="text-sky-400 hover:text-sky-300 font-semibold underline underline-offset-2"
+                  className="text-blue-600 hover:text-blue-700 font-semibold underline underline-offset-2"
                 >
                   Cookie Settings
                 </button>
@@ -111,7 +111,7 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ onOpenPrivacyModal
                   <button
                     type="button"
                     onClick={onOpenPrivacyModal}
-                    className="text-slate-400 hover:text-white font-medium"
+                    className="text-slate-500 hover:text-slate-800 font-medium"
                   >
                     Privacy Policy
                   </button>
@@ -122,14 +122,14 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ onOpenPrivacyModal
                 <button
                   type="button"
                   onClick={handleRejectAll}
-                  className="flex-1 px-3 py-2 bg-cyber-800 hover:bg-cyber-700 text-slate-200 font-semibold rounded-xl text-xs transition-colors text-center"
+                  className="flex-1 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs transition-colors text-center"
                 >
                   Reject Non-Essential
                 </button>
                 <button
                   type="button"
                   onClick={handleAcceptAll}
-                  className="flex-1 px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white font-semibold rounded-xl text-xs shadow-xs transition-colors text-center"
+                  className="flex-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-xs shadow-xs transition-colors text-center"
                 >
                   Accept All
                 </button>
@@ -145,40 +145,40 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ onOpenPrivacyModal
           role="dialog"
           aria-modal="true"
           aria-labelledby="cookie-modal-title"
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in"
+          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in"
         >
-          <div className="bg-cyber-900 border border-cyber-700 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 text-slate-100">
-            <div className="flex items-center justify-between pb-3 border-b border-cyber-800">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4 text-slate-800">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div className="flex items-center space-x-2">
-                <Shield className="w-5 h-5 text-sky-400" />
-                <h3 id="cookie-modal-title" className="text-base font-bold text-white">
+                <Shield className="w-5 h-5 text-blue-600" />
+                <h3 id="cookie-modal-title" className="text-base font-bold text-slate-900">
                   Cookie & Privacy Preferences
                 </h3>
               </div>
               <button
                 onClick={() => setShowPreferencesModal(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-600"
                 aria-label="Close Preferences Modal"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-600 leading-relaxed">
               Customize how Phishing Decoder uses local storage on your device. Essential session cookies cannot be disabled as they are required for Firebase authentication and secure operational persistence.
             </p>
 
             <div className="space-y-3 pt-2 text-xs">
               {/* Essential */}
-              <div className="p-3.5 bg-cyber-950 border border-cyber-800 rounded-xl flex items-center justify-between">
+              <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
                 <div>
                   <div className="flex items-center space-x-2">
-                    <span className="font-bold text-white">Essential Authentication</span>
-                    <span className="text-[10px] px-2 py-0.5 bg-sky-950 text-sky-400 border border-sky-800 rounded font-semibold">
+                    <span className="font-bold text-slate-900">Essential Authentication</span>
+                    <span className="text-[10px] px-2 py-0.5 bg-blue-50 text-blue-700 border border-blue-200 rounded font-semibold">
                       Required
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
+                  <p className="text-[11px] text-slate-500 mt-0.5">
                     Maintains Firebase Auth token and role-based session isolation.
                   </p>
                 </div>
@@ -186,15 +186,15 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ onOpenPrivacyModal
                   type="checkbox"
                   checked={essential}
                   disabled
-                  className="w-4 h-4 text-sky-600 rounded cursor-not-allowed bg-cyber-900 border-cyber-700"
+                  className="w-4 h-4 text-blue-600 rounded cursor-not-allowed bg-slate-200 border-slate-300"
                 />
               </div>
 
               {/* Functional */}
-              <div className="p-3.5 bg-cyber-950 border border-cyber-800 rounded-xl flex items-center justify-between">
+              <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
                 <div>
-                  <span className="font-bold text-white">UI Workspace Preferences</span>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
+                  <span className="font-bold text-slate-900">UI Workspace Preferences</span>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
                     Remembers active analysis tab (URL, Email, SMS) and view preferences.
                   </p>
                 </div>
@@ -202,23 +202,23 @@ export const CookieConsent: React.FC<CookieConsentProps> = ({ onOpenPrivacyModal
                   type="checkbox"
                   checked={analytics}
                   onChange={(e) => setAnalytics(e.target.checked)}
-                  className="w-4 h-4 text-sky-600 rounded cursor-pointer bg-cyber-900 border-cyber-700"
+                  className="w-4 h-4 text-blue-600 rounded cursor-pointer bg-white border-slate-300 focus:ring-0"
                 />
               </div>
             </div>
 
-            <div className="pt-4 border-t border-cyber-800 flex items-center justify-end space-x-2">
+            <div className="pt-4 border-t border-slate-200 flex items-center justify-end space-x-2">
               <button
                 type="button"
                 onClick={handleRejectAll}
-                className="px-4 py-2 text-xs font-semibold text-slate-300 hover:bg-cyber-800 rounded-xl transition-colors"
+                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
               >
                 Reject Non-Essential
               </button>
               <button
                 type="button"
                 onClick={handleSaveCustomPreferences}
-                className="px-4 py-2 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-500 rounded-xl shadow-xs transition-colors flex items-center space-x-1.5"
+                className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors flex items-center space-x-1.5"
               >
                 <Check className="w-3.5 h-3.5" />
                 <span>Save Preferences</span>

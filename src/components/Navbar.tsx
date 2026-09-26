@@ -78,36 +78,41 @@ export const Navbar: React.FC = () => {
               <>
                 <Link
                   to="/admin/dashboard"
-                  className={`hover:text-slate-900 transition-colors ${
+                  className={`hover:text-slate-900 transition-colors flex items-center space-x-1.5 ${
                     location.pathname === '/admin/dashboard' ? 'text-blue-600 font-semibold' : ''
                   }`}
                 >
-                  Admin Overview
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  <span>Admin Dashboard</span>
                 </Link>
                 <Link
                   to="/admin/users"
-                  className={`hover:text-slate-900 transition-colors ${
+                  className={`hover:text-slate-900 transition-colors flex items-center space-x-1.5 ${
                     location.pathname === '/admin/users' ? 'text-blue-600 font-semibold' : ''
                   }`}
                 >
-                  Users
+                  <Users className="w-3.5 h-3.5" />
+                  <span>Users</span>
                 </Link>
                 <Link
                   to="/admin/analyses"
-                  className={`hover:text-slate-900 transition-colors ${
+                  className={`hover:text-slate-900 transition-colors flex items-center space-x-1.5 ${
                     location.pathname === '/admin/analyses' ? 'text-blue-600 font-semibold' : ''
                   }`}
                 >
-                  Global Telemetry
+                  <ShieldAlert className="w-3.5 h-3.5" />
+                  <span>Analyses</span>
                 </Link>
                 <Link
                   to="/admin/messages"
-                  className={`hover:text-slate-900 transition-colors ${
+                  className={`hover:text-slate-900 transition-colors flex items-center space-x-1.5 ${
                     location.pathname === '/admin/messages' ? 'text-blue-600 font-semibold' : ''
                   }`}
                 >
-                  Messages
+                  <Inbox className="w-3.5 h-3.5" />
+                  <span>Messages</span>
                 </Link>
+                <div className="h-4 w-px bg-slate-200" />
                 <Link
                   to="/decoder"
                   className={`hover:text-slate-900 transition-colors text-slate-500 flex items-center gap-1 ${
@@ -127,7 +132,23 @@ export const Navbar: React.FC = () => {
                     location.pathname === '/decoder' ? 'text-blue-600 font-semibold' : ''
                   }`}
                 >
-                  Threat Decoder
+                  Decoder
+                </Link>
+                <Link
+                  to="/dashboard"
+                  className={`hover:text-slate-900 transition-colors ${
+                    location.pathname === '/dashboard' ? 'text-blue-600 font-semibold' : ''
+                  }`}
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/history"
+                  className={`hover:text-slate-900 transition-colors ${
+                    location.pathname === '/history' ? 'text-blue-600 font-semibold' : ''
+                  }`}
+                >
+                  History
                 </Link>
                 <Link
                   to="/learn"
@@ -135,28 +156,8 @@ export const Navbar: React.FC = () => {
                     location.pathname === '/learn' ? 'text-blue-600 font-semibold' : ''
                   }`}
                 >
-                  Spot the Phish
+                  Learn
                 </Link>
-                {user && (
-                  <>
-                    <Link
-                      to="/dashboard"
-                      className={`hover:text-slate-900 transition-colors ${
-                        location.pathname === '/dashboard' ? 'text-blue-600 font-semibold' : ''
-                      }`}
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      to="/history"
-                      className={`hover:text-slate-900 transition-colors ${
-                        location.pathname === '/history' ? 'text-blue-600 font-semibold' : ''
-                      }`}
-                    >
-                      History
-                    </Link>
-                  </>
-                )}
               </>
             )}
           </nav>
@@ -324,21 +325,21 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block px-3 py-2 rounded-xl text-xs font-semibold text-blue-600 bg-blue-50"
                 >
-                  Admin Overview
+                  Admin Dashboard
                 </Link>
                 <Link
                   to="/admin/users"
                   onClick={() => setMobileMenuOpen(false)}
                   className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
                 >
-                  Manage Users
+                  Users
                 </Link>
                 <Link
                   to="/admin/analyses"
                   onClick={() => setMobileMenuOpen(false)}
                   className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
                 >
-                  Global Telemetry
+                  Analyses
                 </Link>
                 <Link
                   to="/admin/messages"
@@ -363,33 +364,29 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
                 >
-                  Threat Decoder Studio
+                  Decoder
+                </Link>
+                <Link
+                  to="/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/history"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
+                >
+                  History
                 </Link>
                 <Link
                   to="/learn"
                   onClick={() => setMobileMenuOpen(false)}
                   className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
                 >
-                  Spot the Phish
+                  Learn
                 </Link>
-                {user && (
-                  <>
-                    <Link
-                      to="/dashboard"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
-                    >
-                      Security Dashboard
-                    </Link>
-                    <Link
-                      to="/history"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block px-3 py-2 rounded-xl text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50"
-                    >
-                      Analysis History
-                    </Link>
-                  </>
-                )}
               </>
             )}
           </nav>

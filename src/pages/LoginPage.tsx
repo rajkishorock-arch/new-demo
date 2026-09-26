@@ -60,8 +60,8 @@ export const LoginPage: React.FC = () => {
       }
 
       if (loggedInUser) {
-        const explicitFrom = (location.state as any)?.from?.pathname;
-        navigate(explicitFrom || '/dashboard', { replace: true });
+        // Redirection is handled automatically by the useEffect hook based on role
+        // (Admin -> /admin/dashboard, User -> /dashboard or protected route)
       }
     } catch (err: any) {
       setError('Unable to sign in. Please verify your credentials and try again.');
@@ -101,6 +101,15 @@ export const LoginPage: React.FC = () => {
             <p className="text-xs sm:text-sm text-slate-500">
               Access your saved analysis history and security dashboard.
             </p>
+          </div>
+
+          {/* Role-Based Redirection Information */}
+          <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600 flex items-start space-x-2.5">
+            <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+            <div>
+              <span className="font-semibold text-slate-800">Role-Based Redirection: </span>
+              Verified administrators are automatically routed to <strong className="text-slate-900">Admin Dashboard</strong>. Security analysts are directed to the user dashboard.
+            </div>
           </div>
 
           {/* Error Message */}

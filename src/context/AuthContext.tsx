@@ -222,9 +222,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
         const updatedUser = auth.currentUser || userCredential.user;
         setUser({ ...updatedUser });
+        await fetchProfile(updatedUser, fullName);
         setLoading(false);
-        // Trigger profile fetch asynchronously
-        fetchProfile(updatedUser, fullName);
       } else {
         setLoading(false);
       }
@@ -241,10 +240,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       setUser(userCredential.user);
-      setLoading(false);
       if (userCredential.user) {
-        fetchProfile(userCredential.user);
+        await fetchProfile(userCredential.user);
       }
+      setLoading(false);
       return { error: null, user: userCredential.user };
     } catch (err: any) {
       setLoading(false);

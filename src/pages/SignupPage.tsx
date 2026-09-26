@@ -79,11 +79,7 @@ export const SignupPage: React.FC = () => {
       }
 
       if (registeredUser) {
-        setSuccessMsg('Account created successfully. Redirecting...');
-        setTimeout(() => {
-          const explicitFrom = (location.state as any)?.from?.pathname;
-          navigate(explicitFrom || '/dashboard', { replace: true });
-        }, 800);
+        setSuccessMsg('Account created successfully. Redirecting to your workspace...');
       }
     } catch (err: any) {
       setError('An error occurred during registration. Please try again.');
@@ -123,6 +119,15 @@ export const SignupPage: React.FC = () => {
             <p className="text-xs sm:text-sm text-slate-500">
               Start analyzing suspicious threats and tracking security history.
             </p>
+          </div>
+
+          {/* Role System Information Callout */}
+          <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600 flex items-start space-x-2.5">
+            <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+            <div>
+              <span className="font-semibold text-slate-800">Role-Based System: </span>
+              New registrations are enrolled as <strong className="text-slate-900">Analyst (User)</strong>. Administrator access is restricted and provisioned via central role-based access control.
+            </div>
           </div>
 
           {/* Error / Success Feedback */}

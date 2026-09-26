@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
+import { AdminNav } from '../../components/AdminNav';
 import { StatusBadge } from '../../components/StatusBadge';
 import { ThreatResultCard } from '../../components/ThreatResultCard';
 import { LegalModal, LegalDocType } from '../../components/LegalModal';
@@ -114,7 +115,9 @@ export const AdminDashboardPage: React.FC = () => {
       <Navbar />
 
       <main className="flex-1 py-8 sm:py-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <AdminNav />
+
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-200 gap-4">
             <div>

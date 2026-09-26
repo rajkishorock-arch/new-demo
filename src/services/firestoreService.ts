@@ -71,6 +71,19 @@ export interface ContactMessage {
   status: 'new' | 'read' | 'resolved';
 }
 
+const DEFAULT_ADMIN_EMAILS = [
+  'admin@phishingdecoder.com',
+  'admin@geckhagaria.ac.in',
+  'rajkishorock@gmail.com'
+];
+
+export const getAdminEmails = (): string[] => {
+  const envAdmins = (import.meta as any).env?.VITE_ADMIN_EMAILS
+    ? String((import.meta as any).env.VITE_ADMIN_EMAILS).split(',').map(e => e.trim().toLowerCase())
+    : [];
+  return Array.from(new Set([...DEFAULT_ADMIN_EMAILS, ...envAdmins]));
+};
+
 // 1. Create or update user profile upon authentication
 export const createOrUpdateUserProfile = async (
   user: User,
@@ -86,15 +99,20 @@ export const createOrUpdateUserProfile = async (
     user.displayName ||
     (user.email ? user.email.split('@')[0] : 'Security Analyst');
 
+  const userEmail = (user.email || '').trim().toLowerCase();
+  const isAdminEmail = getAdminEmails().includes(userEmail);
+
   const docSnap = await getDoc(userDocRef);
 
   if (!docSnap.exists()) {
+    const assignedRole: UserRole = isAdminEmail ? 'admin' : 'user';
+
     const newUserData: UserProfileData = {
       uid: user.uid,
       displayName,
       email: user.email || '',
       photoURL: user.photoURL || null,
-      role: 'user', // Initial registration is always standard user
+      role: assignedRole,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       stats: {
@@ -112,10 +130,13 @@ export const createOrUpdateUserProfile = async (
     const existing = docSnap.data() as UserProfileData;
     const updates: Record<string, any> = {};
 
-    // Ensure role exists while strictly preserving any existing 'admin' role
+    // Ensure role exists while preserving administrative privileges
     if (!existing.role) {
-      existing.role = 'user';
-      updates.role = 'user';
+      existing.role = isAdminEmail ? 'admin' : 'user';
+      updates.role = existing.role;
+    } else if (isAdminEmail && existing.role !== 'admin') {
+      existing.role = 'admin';
+      updates.role = 'admin';
     }
 
     // Ensure stats structure exists if created under an older schema
